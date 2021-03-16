@@ -10,120 +10,139 @@ jobs:
   posix-conan-test:
     strategy:
       matrix:
-        name: [clang-11, osx-gcc-10, gcc-10, clang-10, clang-11-sanitize, armv7]
+        #name: [clang-11, osx-clang-11, osx-gcc-10, gcc-10, clang-10, clang-11-sanitize, armv7]
+        name: [osx-clang-11]
         include:
-          # Clang-11 (w. Clang-Tidy)
-          - name: clang-11
+          # # Clang-11 (w. Clang-Tidy)
+          # - name: clang-11
+          #   compiler: clang
+          #   version: "11"
+          #   os: linux
+          #   arch: x86_64
+          #   build-type: Release
+          #   cc: clang
+          #   clang_tidy: "True"
+          #   cxx: clang++
+          #   exceptions: "True"
+          #   generator: "Ninja"
+          #   int128: "True"
+          #   linux-container: johnmcfarlane/cnl_ci:clang-11-libcpp
+          #   os-version: ubuntu-20.04
+          #   sanitize: "False"
+          #   stdlib: libc++
+          #   toolchain: clang-libc++.cmake
+
+          # OS X Clang-11
+          - name: osx-clang-11
+            os: osx
             compiler: clang
             version: "11"
-            os: linux
-            arch: x86_64
-            build-type: Release
-            cc: clang
-            clang_tidy: "True"
-            cxx: clang++
-            exceptions: "True"
-            generator: "Ninja"
-            int128: "True"
-            linux-container: johnmcfarlane/cnl_ci:clang-11-libcpp
-            os-version: ubuntu-20.04
-            sanitize: "False"
-            stdlib: libc++
-            toolchain: clang-libc++.cmake
-
-          # OS X
-          - name: osx-gcc-10
-            os: osx
-            compiler: gcc
-            version: "10"
-            arch: x86_64
-            build-type: Release
-            cc: gcc-10
-            clang_tidy: "False"
-            cxx: g++-10
-            exceptions: "True"
-            generator: "Ninja"
-            int128: "True"
-            os-version: macos-10.15
-            sanitize: "False"
-            stdlib: libstdc++11
-            toolchain: gcc.cmake
-
-          # GCC-10 (Contrary)
-          - name: gcc-10
-            compiler: gcc
-            version: "10"
-            os: linux
             arch: x86_64
             build-type: Debug
-            cc: gcc-10
+            cc: "/usr/local/opt/llvm/bin/clang"
             clang_tidy: "False"
-            cxx: g++-10
+            cxx: "/usr/local/opt/llvm/bin/clang++"
             exceptions: "False"
             generator: "Unix Makefiles"
             int128: "False"
-            linux-container: johnmcfarlane/cnl_ci:gcc-10
-            os-version: ubuntu-20.04
-            sanitize: "False"
-            stdlib: libstdc++11
-            toolchain: gcc.cmake
-
-          # Clang-10
-          - name: clang-10
-            compiler: clang
-            version: "10"
-            os: linux
-            arch: x86_64
-            build-type: Release
-            cc: clang
-            clang_tidy: "False"
-            cxx: clang++
-            exceptions: "True"
-            generator: "Ninja"
-            int128: "True"
-            linux-container: johnmcfarlane/cnl_ci:clang-10-libcpp
-            os-version: ubuntu-20.04
-            sanitize: "False"
-            stdlib: libc++
-            toolchain: clang-libc++.cmake
-
-          # Clang-11 (w. ASan + UBSan)
-          - name: clang-11-sanitize
-            compiler: clang
-            version: "11"
-            os: linux
-            arch: x86_64
-            build-type: Release
-            cc: clang
-            clang_tidy: "False"
-            cxx: clang++
-            exceptions: "True"
-            generator: "Ninja"
-            int128: "True"
-            linux-container: johnmcfarlane/cnl_ci:clang-11-libcpp
-            os-version: ubuntu-20.04
+            os-version: macos-10.15
             sanitize: "True"
             stdlib: libc++
             toolchain: clang-libc++.cmake
 
-          # GCC-10 (for ARMv7)
-          - name: armv7
-            arch: armv7
-            compiler: gcc
-            version: "10"
-            os: linux
-            build-type: Release
-            cc: arm-linux-gnueabi-gcc-10
-            clang_tidy: "False"
-            cxx: arm-linux-gnueabi-g++-10
-            exceptions: "True"
-            generator: "Ninja"
-            int128: "False"
-            linux-container: johnmcfarlane/cnl_ci:gcc-10
-            os-version: ubuntu-20.04
-            sanitize: "False"
-            stdlib: libstdc++11
-            toolchain: gcc-armv7.cmake
+          # # OS X GCC-10
+          # - name: osx-gcc-10
+          #   os: osx
+          #   compiler: gcc
+          #   version: "10"
+          #   arch: x86_64
+          #   build-type: Release
+          #   cc: gcc-10
+          #   clang_tidy: "False"
+          #   cxx: g++-10
+          #   exceptions: "True"
+          #   generator: "Ninja"
+          #   int128: "True"
+          #   os-version: macos-10.15
+          #   sanitize: "False"
+          #   stdlib: libstdc++11
+          #   toolchain: gcc.cmake
+
+          # # GCC-10 (Contrary)
+          # - name: gcc-10
+          #   compiler: gcc
+          #   version: "10"
+          #   os: linux
+          #   arch: x86_64
+          #   build-type: Debug
+          #   cc: gcc-10
+          #   clang_tidy: "False"
+          #   cxx: g++-10
+          #   exceptions: "False"
+          #   generator: "Unix Makefiles"
+          #   int128: "False"
+          #   linux-container: johnmcfarlane/cnl_ci:gcc-10
+          #   os-version: ubuntu-20.04
+          #   sanitize: "False"
+          #   stdlib: libstdc++11
+          #   toolchain: gcc.cmake
+
+          # # Clang-10
+          # - name: clang-10
+          #   compiler: clang
+          #   version: "10"
+          #   os: linux
+          #   arch: x86_64
+          #   build-type: Release
+          #   cc: clang
+          #   clang_tidy: "False"
+          #   cxx: clang++
+          #   exceptions: "True"
+          #   generator: "Ninja"
+          #   int128: "True"
+          #   linux-container: johnmcfarlane/cnl_ci:clang-10-libcpp
+          #   os-version: ubuntu-20.04
+          #   sanitize: "False"
+          #   stdlib: libc++
+          #   toolchain: clang-libc++.cmake
+
+          # # Clang-11 (w. ASan + UBSan)
+          # - name: clang-11-sanitize
+          #   compiler: clang
+          #   version: "11"
+          #   os: linux
+          #   arch: x86_64
+          #   build-type: Release
+          #   cc: clang
+          #   clang_tidy: "False"
+          #   cxx: clang++
+          #   exceptions: "True"
+          #   generator: "Ninja"
+          #   int128: "True"
+          #   linux-container: johnmcfarlane/cnl_ci:clang-11-libcpp
+          #   os-version: ubuntu-20.04
+          #   sanitize: "True"
+          #   stdlib: libc++
+          #   toolchain: clang-libc++.cmake
+
+          # # GCC-10 (for ARMv7)
+          # - name: armv7
+          #   arch: armv7
+          #   compiler: gcc
+          #   version: "10"
+          #   os: linux
+          #   build-type: Release
+          #   cc: arm-linux-gnueabi-gcc-10
+          #   clang_tidy: "False"
+          #   cxx: arm-linux-gnueabi-g++-10
+          #   exceptions: "True"
+          #   generator: "Ninja"
+          #   int128: "False"
+          #   linux-container: johnmcfarlane/cnl_ci:gcc-10
+          #   os-version: ubuntu-20.04
+          #   sanitize: "False"
+          #   stdlib: libstdc++11
+          #   toolchain: gcc-armv7.cmake
 
     container: ${{matrix.linux-container}}
     env:
@@ -150,7 +169,15 @@ jobs:
 
     - name: Install Brew packages
       if: ( matrix.os == 'osx' )
-      run: brew install ccache conan gcc@10 ninja
+      run: brew install ccache conan ninja
+
+    # - name: Install GCC Brew packages
+    #   if: ( matrix.name == 'osx-gcc-10' )
+    #   run: brew install ccache conan gcc@10 ninja
+
+    # # - name: Install Clang Brew packages
+    # #   if: ( matrix.name == 'osx-clang-11' )
+    # #   run: brew install ccache conan
 
     - name: Install ARMv7 packages
       if: ( matrix.arch == 'armv7' )
@@ -195,188 +222,188 @@ jobs:
     - name: ccache report
       run: ccache -s
 
-  # Build and test on Windows using Conan
-  windows-conan-test:
-    runs-on: windows-2019
-    strategy:
-      matrix:
-        arch: [x86_64, x86]
-        include:
-          - arch: x86_64
-            cmake_arch: x64
-            exceptions: "True"
-            msbuild_property: x64
-          - arch: x86
-            cmake_arch: Win32
-            exceptions: "False"
-            msbuild_property: win32
+  # # Build and test on Windows using Conan
+  # windows-conan-test:
+  #   runs-on: windows-2019
+  #   strategy:
+  #     matrix:
+  #       arch: [x86_64, x86]
+  #       include:
+  #         - arch: x86_64
+  #           cmake_arch: x64
+  #           exceptions: "True"
+  #           msbuild_property: x64
+  #         - arch: x86
+  #           cmake_arch: Win32
+  #           exceptions: "False"
+  #           msbuild_property: win32
 
-    steps:
-    - uses: actions/checkout@v2
+  #   steps:
+  #   - uses: actions/checkout@v2
 
-    - name: Restore caches
-      uses: actions/cache@v2
-      with:
-        path: |
-          ~\AppData\Local\pip\Cache
-          ~\.conan\data
-          ~\.ccache
-        key: test-${{matrix.arch}}-${{github.ref}}-${{github.sha}}
-        restore-keys: |
-          test-${{matrix.arch}}-${{github.ref}}-
-          test-${{matrix.arch}}-main-
-          test-${{matrix.arch}}-
+  #   - name: Restore caches
+  #     uses: actions/cache@v2
+  #     with:
+  #       path: |
+  #         ~\AppData\Local\pip\Cache
+  #         ~\.conan\data
+  #         ~\.ccache
+  #       key: test-${{matrix.arch}}-${{github.ref}}-${{github.sha}}
+  #       restore-keys: |
+  #         test-${{matrix.arch}}-${{github.ref}}-
+  #         test-${{matrix.arch}}-main-
+  #         test-${{matrix.arch}}-
 
-    - name: Initialise Conan
-      run: |
-        pip.exe install conan;
-        conan profile new default;
-        conan profile update settings.compiler="Visual Studio" default;
-        conan profile update settings.compiler.cppstd=20 default;
-        conan profile update settings.os=Windows default;
-        conan profile update settings.arch=${{matrix.arch}} default;
-        conan profile update settings.compiler.version=16 default
+  #   - name: Initialise Conan
+  #     run: |
+  #       pip.exe install conan;
+  #       conan profile new default;
+  #       conan profile update settings.compiler="Visual Studio" default;
+  #       conan profile update settings.compiler.cppstd=20 default;
+  #       conan profile update settings.os=Windows default;
+  #       conan profile update settings.arch=${{matrix.arch}} default;
+  #       conan profile update settings.compiler.version=16 default
 
-    - name: Create build directory
-      run: mkdir ${{runner.workspace}}\build
+  #   - name: Create build directory
+  #     run: mkdir ${{runner.workspace}}\build
 
-    - name: Install dependencies
-      working-directory: ${{runner.workspace}}/build
-      run: |
-        conan install `
-          --build=missing `
-          --env CONAN_CMAKE_GENERATOR="Visual Studio 16 2019" `
-          --env CONAN_CMAKE_TOOLCHAIN_FILE="$env:GITHUB_WORKSPACE"\test\toolchain\msvc.cmake `
-          --options enable_exceptions=${{matrix.exceptions}} `
-          --options target=test-all `
-          --options test_pattern="^test-unit-" `
-          --settings build_type=Release `
-          $env:GITHUB_WORKSPACE
+  #   - name: Install dependencies
+  #     working-directory: ${{runner.workspace}}/build
+  #     run: |
+  #       conan install `
+  #         --build=missing `
+  #         --env CONAN_CMAKE_GENERATOR="Visual Studio 16 2019" `
+  #         --env CONAN_CMAKE_TOOLCHAIN_FILE="$env:GITHUB_WORKSPACE"\test\toolchain\msvc.cmake `
+  #         --options enable_exceptions=${{matrix.exceptions}} `
+  #         --options target=test-all `
+  #         --options test_pattern="^test-unit-" `
+  #         --settings build_type=Release `
+  #         $env:GITHUB_WORKSPACE
 
-    - name: Build and run tests
-      working-directory: ${{runner.workspace}}/build
-      run: conan build --build --configure --test $env:GITHUB_WORKSPACE
+  #   - name: Build and run tests
+  #     working-directory: ${{runner.workspace}}/build
+  #     run: conan build --build --configure --test $env:GITHUB_WORKSPACE
 
-    - name: Run benchmarks
-      working-directory: ${{runner.workspace}}/build
-      run: test\benchmark\Release\test-benchmark.exe
+  #   - name: Run benchmarks
+  #     working-directory: ${{runner.workspace}}/build
+  #     run: test\benchmark\Release\test-benchmark.exe
 
-  # Build and test latest on Linux using only CMake
-  linux-cmake-test:
-    strategy:
-      matrix:
-        compiler: [clang-head, gcc-head]
+  # # Build and test latest on Linux using only CMake
+  # linux-cmake-test:
+  #   strategy:
+  #     matrix:
+  #       compiler: [clang-head, gcc-head]
 
-        include:
-          - compiler: clang-head
-            cxx_extensions: ON
-            toolchain: clang.cmake
-            container: johnmcfarlane/cnl_ci:clang-head-libstdcpp
-          - compiler: gcc-head
-            cxx_extensions: OFF
-            toolchain: gcc.cmake
-            container: johnmcfarlane/cnl_ci:gcc-head
+  #       include:
+  #         - compiler: clang-head
+  #           cxx_extensions: ON
+  #           toolchain: clang.cmake
+  #           container: johnmcfarlane/cnl_ci:clang-head-libstdcpp
+  #         - compiler: gcc-head
+  #           cxx_extensions: OFF
+  #           toolchain: gcc.cmake
+  #           container: johnmcfarlane/cnl_ci:gcc-head
 
-    container: ${{matrix.container}}
-    runs-on: ubuntu-20.04
+  #   container: ${{matrix.container}}
+  #   runs-on: ubuntu-20.04
 
-    steps:
-    - uses: actions/checkout@v2
+  #   steps:
+  #   - uses: actions/checkout@v2
 
-    - name: Restore caches
-      uses: actions/cache@v2
-      with:
-        path: |
-          /github/home/.conan/data
-          /github/home/.ccache
-        key: test-${{matrix.compiler}}-${{github.ref}}-${{github.sha}}
-        restore-keys: |
-          test-${{matrix.compiler}}-${{github.ref}}-
-          test-${{matrix.compiler}}-main-
-          test-${{matrix.compiler}}-
+  #   - name: Restore caches
+  #     uses: actions/cache@v2
+  #     with:
+  #       path: |
+  #         /github/home/.conan/data
+  #         /github/home/.ccache
+  #       key: test-${{matrix.compiler}}-${{github.ref}}-${{github.sha}}
+  #       restore-keys: |
+  #         test-${{matrix.compiler}}-${{github.ref}}-
+  #         test-${{matrix.compiler}}-main-
+  #         test-${{matrix.compiler}}-
 
-    - name: Build and Install GTest
-      run: |
-        git clone https://github.com/google/googletest.git && \
-        cd googletest && \
-        git checkout 3c95bf552405fd0cc63cea0ca2f6c4cd89c8d356 && \
-        cmake \
-          -DCMAKE_TOOLCHAIN_FILE:FILEPATH=$GITHUB_WORKSPACE/test/toolchain/${{matrix.toolchain}} \
-          . && \
-        cmake --build . --target install
+  #   - name: Build and Install GTest
+  #     run: |
+  #       git clone https://github.com/google/googletest.git && \
+  #       cd googletest && \
+  #       git checkout 3c95bf552405fd0cc63cea0ca2f6c4cd89c8d356 && \
+  #       cmake \
+  #         -DCMAKE_TOOLCHAIN_FILE:FILEPATH=$GITHUB_WORKSPACE/test/toolchain/${{matrix.toolchain}} \
+  #         . && \
+  #       cmake --build . --target install
 
-    - name: Configure CNL
-      run: |
-        cmake \
-          -DCMAKE_CXX_EXTENSIONS=${{matrix.cxx_extensions}} \
-          -DCMAKE_TOOLCHAIN_FILE:FILEPATH=$GITHUB_WORKSPACE/test/toolchain/${{matrix.toolchain}} \
-          $GITHUB_WORKSPACE
+  #   - name: Configure CNL
+  #     run: |
+  #       cmake \
+  #         -DCMAKE_CXX_EXTENSIONS=${{matrix.cxx_extensions}} \
+  #         -DCMAKE_TOOLCHAIN_FILE:FILEPATH=$GITHUB_WORKSPACE/test/toolchain/${{matrix.toolchain}} \
+  #         $GITHUB_WORKSPACE
 
-    - name: Build CNL
-      run: cmake --build $GITHUB_WORKSPACE --target test-all
+  #   - name: Build CNL
+  #     run: cmake --build $GITHUB_WORKSPACE --target test-all
 
-    - name: Test CNL
-      run: ctest --output-on-failure
+  #   - name: Test CNL
+  #     run: ctest --output-on-failure
 
-    - name: ccache report
-      run: ccache -s
+  #   - name: ccache report
+  #     run: ccache -s
 
-  # Install on mature Linux distro using only CMake
-  linux-cmake-install:
-    runs-on: ubuntu-16.04
-    steps:
-    - uses: actions/checkout@v2
+  # # Install on mature Linux distro using only CMake
+  # linux-cmake-install:
+  #   runs-on: ubuntu-16.04
+  #   steps:
+  #   - uses: actions/checkout@v2
 
-    - name: Configure CNL
-      run: cmake $GITHUB_WORKSPACE
+  #   - name: Configure CNL
+  #     run: cmake $GITHUB_WORKSPACE
 
-    - name: Install CNL
-      run: sudo cmake --build $GITHUB_WORKSPACE --target install
+  #   - name: Install CNL
+  #     run: sudo cmake --build $GITHUB_WORKSPACE --target install
 
-  # Test shell scripts
-  clang-format:
-    runs-on: ubuntu-20.04
-    container: johnmcfarlane/cnl_ci:clang-11
-    steps:
-    - uses: actions/checkout@v2
+  # # Test shell scripts
+  # clang-format:
+  #   runs-on: ubuntu-20.04
+  #   container: johnmcfarlane/cnl_ci:clang-11
+  #   steps:
+  #   - uses: actions/checkout@v2
 
-    - name: Format code
-      shell: bash
-      run: $GITHUB_WORKSPACE/test/scripts/clang-format
+  #   - name: Format code
+  #     shell: bash
+  #     run: $GITHUB_WORKSPACE/test/scripts/clang-format
 
-    - name: Show/test for changes
-      shell: bash
-      run: |
-        git diff && \
-        if [[ `git status --porcelain` ]]; then exit 1; fi
+  #   - name: Show/test for changes
+  #     shell: bash
+  #     run: |
+  #       git diff && \
+  #       if [[ `git status --porcelain` ]]; then exit 1; fi
 
-  # Test shell scripts
-  shellcheck:
-    runs-on: ubuntu-20.04
-    container: johnmcfarlane/cnl_ci:base-20.04
-    steps:
-    - uses: actions/checkout@v2
+  # # Test shell scripts
+  # shellcheck:
+  #   runs-on: ubuntu-20.04
+  #   container: johnmcfarlane/cnl_ci:base-20.04
+  #   steps:
+  #   - uses: actions/checkout@v2
 
-    - name: Run All Tests
-      shell: bash
-      run: $GITHUB_WORKSPACE/test/scripts/shellcheck
+  #   - name: Run All Tests
+  #     shell: bash
+  #     run: $GITHUB_WORKSPACE/test/scripts/shellcheck
 
-  # Test documentation generation
-  doxygen:
-    runs-on: ubuntu-18.04
-    container: johnmcfarlane/cnl_ci:gcc-10
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-        submodules: true
+  # # Test documentation generation
+  # doxygen:
+  #   runs-on: ubuntu-18.04
+  #   container: johnmcfarlane/cnl_ci:gcc-10
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #     with:
+  #       fetch-depth: 0
+  #       submodules: true
 
-    - name: Generate documentation
-      shell: bash
-      run: $GITHUB_WORKSPACE/doc/generate
+  #   - name: Generate documentation
+  #     shell: bash
+  #     run: $GITHUB_WORKSPACE/doc/generate
 
-    - name: Upload documentation
-      uses: actions/upload-artifact@v2
-      with:
-        name: documentation
-        path: ${{github.workspace}}/htdocs
+  #   - name: Upload documentation
+  #     uses: actions/upload-artifact@v2
+  #     with:
+  #       name: documentation
+  #       path: ${{github.workspace}}/htdocs
